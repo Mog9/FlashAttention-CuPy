@@ -8,7 +8,7 @@ The kernel is mathematically correct. It does not beat naive CuPy attention in p
 
 ## What is Flash Attention
 
-Standard attention computes the full NxN score matrix and writes it to global memory (HBM). For sequence length N=4096, that matrix is large and the repeated HBM reads and writes become the bottleneck.
+Standard attention computes the full NxN score matrix and writes it to global memory (HBM). matrix is large and the repeated HBM reads and writes become the bottleneck.
 
 Flash Attention processes attention in tiles. The score matrix is never materialized in HBM — scores are computed tile by tile, kept in registers, and discarded. Memory complexity goes from O(N²) to O(N).
 
