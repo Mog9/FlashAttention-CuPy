@@ -103,4 +103,9 @@ def flash_attention(Q, K, V):
         (Q, K, V, O, cp.int32(N), cp.int32(d), scale),
         shared_mem=shared_mem
     )
-    return O
+
+    S = (Q @ K.T) * float(scale)
+    m = cp.max(S, axis=-1, keepdims=True)
+    l = cp.sum(cp.exp(S - m), axis=-1, keepdims=True)
+
+    return O, l, m
